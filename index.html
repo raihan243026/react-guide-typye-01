@@ -1,0 +1,763 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>সম্পূর্ণ রিয়্যাক্ট জেএস গাইড</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Hind+Siliguri:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <!-- Font Awesome for Social Media Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <style>
+        body {
+            font-family: 'Hind Siliguri', sans-serif;
+            transition: background-color 0.3s, color 0.3s;
+        }
+        .content-section {
+            display: none;
+        }
+        .content-section.active {
+            display: block;
+        }
+        .nav-link.active {
+            background-color: #920d0d;
+            color: white;
+            font-weight: 600;
+        }
+        .code-block {
+            background-color: #2e2e2e;
+            color: #f3f4f6;
+            padding: 1rem;
+            border-radius: 0.5rem;
+            overflow-x: auto;
+            font-size: 0.875rem;
+            line-height: 1.5;
+        }
+        .demo-box {
+            border: 1px solid #4a4a4a;
+            padding: 1.5rem;
+            border-radius: 0.75rem;
+            margin-top: 1.5rem;
+            background-color: #3b3b3b;
+        }
+
+        /* Default Black Theme */
+        .black-theme {
+            background-color: #111;
+            color: #f3f4f6;
+        }
+        .black-theme header, .black-theme aside, .black-theme footer {
+            background-color: #1a1a1a;
+            box-shadow: 0 4px 6px -1px rgba(255, 255, 255, 0.1), 0 2px 4px -1px rgba(255, 255, 255, 0.06);
+        }
+        .black-theme .nav-link {
+            color: #ccc;
+        }
+        .black-theme .nav-link:hover {
+            background-color: #2a2a2a;
+        }
+        .black-theme .nav-link.active {
+            background-color: #8c0d0d;
+            color: white;
+        }
+        .black-theme .text-blue-600 {
+            color: #fca5a5;
+        }
+        .black-theme .text-gray-600 {
+            color: #d1d5db;
+        }
+        .black-theme .text-purple-600 {
+            color: #d8b4fe;
+        }
+        .black-theme .demo-box {
+            background-color: #1a1a1a;
+            border-color: #4a4a4a;
+        }
+        .black-theme .code-block {
+            background-color: #2e2e2e;
+        }
+        .black-theme input, .black-theme button {
+            color: #f3f4f6;
+            background-color: #3b3b3b;
+        }
+        .black-theme input::placeholder {
+            color: #999;
+        }
+
+        /* Dark Red Theme */
+        .dark-red-theme {
+            background-color: #410606;
+            color: #f3f4f6;
+        }
+        .dark-red-theme header, .dark-red-theme aside, .dark-red-theme footer {
+            background-color: #550808;
+            box-shadow: 0 4px 6px -1px rgba(255, 255, 255, 0.1), 0 2px 4px -1px rgba(255, 255, 255, 0.06);
+        }
+        .dark-red-theme .nav-link {
+            color: #fca5a5;
+        }
+        .dark-red-theme .nav-link:hover {
+            background-color: #6a0b0b;
+        }
+        .dark-red-theme .nav-link.active {
+            background-color: #1a1a1a;
+            color: white;
+        }
+        .dark-red-theme .text-blue-600 {
+            color: #fca5a5;
+        }
+        .dark-red-theme .text-gray-600 {
+            color: #e5e7eb;
+        }
+        .dark-red-theme .text-purple-600 {
+            color: #d8b4fe;
+        }
+        .dark-red-theme .demo-box {
+            background-color: #550808;
+            border-color: #8c0d0d;
+        }
+        .dark-red-theme .code-block {
+            background-color: #6a0b0b;
+        }
+        .dark-red-theme input, .dark-red-theme button {
+            color: #f3f4f6;
+            background-color: #6a0b0b;
+        }
+        .dark-red-theme input::placeholder {
+            color: #ccc;
+        }
+
+        /* Hide the default checkmark icon */
+        .theme-toggle-icon {
+            display: inline-block;
+            width: 24px;
+            height: 24px;
+            border-radius: 50%;
+            border: 2px solid white;
+            transition: background-color 0.3s;
+        }
+        .theme-toggle-icon.black {
+            background-color: black;
+        }
+        .theme-toggle-icon.dark-red {
+            background-color: #8c0d0d;
+        }
+    </style>
+</head>
+<body class="black-theme">
+
+    <!-- Header / Navbar -->
+    <header class="shadow-md p-4 flex flex-col md:flex-row items-center justify-between sticky top-0 z-50">
+        <div class="flex items-center justify-between w-full md:w-auto">
+            <h1 class="text-xl md:text-2xl font-bold text-blue-600">রিয়্যাক্ট জেএস গাইড</h1>
+            <div class="flex items-center md:hidden">
+                <button id="theme-toggle-mobile" class="ml-4 p-2 rounded-lg hover:bg-gray-200 transition-colors duration-200 text-2xl">
+                    <span class="theme-toggle-icon black"></span>
+                </button>
+                <button id="menu-toggle" class="p-2 ml-2 rounded-lg hover:bg-gray-200 text-gray-600">
+                    <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M3 5a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zM3 10a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zM3 15a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1z" clip-rule="evenodd"></path></svg>
+                </button>
+            </div>
+        </div>
+        <div class="mt-4 md:mt-0 flex-grow flex items-center justify-end w-full md:w-auto">
+            <div class="relative w-full md:w-auto md:mr-4">
+                <input type="text" id="search-bar" placeholder="এখানে খুঁজুন..." class="w-full md:w-64 border p-2 pl-10 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 transition-all">
+                <span class="absolute inset-y-0 left-0 pl-3 flex items-center text-gray-400">
+                    🔍
+                </span>
+            </div>
+            <button id="theme-toggle-desktop" class="p-2 rounded-lg hover:bg-gray-200 transition-colors duration-200 hidden md:block">
+                <span class="theme-toggle-icon black"></span>
+            </button>
+        </div>
+    </header>
+
+    <div class="flex flex-col md:flex-row min-h-screen">
+        <!-- Sidebar Navigation -->
+        <aside id="sidebar" class="w-full md:w-80 shadow-lg md:block hidden">
+            <nav id="sidebar-nav" class="p-4 md:p-6">
+                <button class="nav-link w-full text-left p-3 my-1 rounded-lg transition-colors duration-200 active" data-target="getting-started">১. শুরু করা</button>
+                <button class="nav-link w-full text-left p-3 my-1 rounded-lg transition-colors duration-200" data-target="file-structure">২. ফাইল স্ট্রাকচার</button>
+                <button class="nav-link w-full text-left p-3 my-1 rounded-lg transition-colors duration-200" data-target="components">৩. কম্পোনেন্ট ও প্রপস</button>
+                <button class="nav-link w-full text-left p-3 my-1 rounded-lg transition-colors duration-200" data-target="state">৪. স্টেট ও useState</button>
+                <button class="nav-link w-full text-left p-3 my-1 rounded-lg transition-colors duration-200" data-target="conditional-rendering">৫. শর্তসাপেক্ষে রেন্ডারিং</button>
+                <button class="nav-link w-full text-left p-3 my-1 rounded-lg transition-colors duration-200" data-target="list-rendering">৬. তালিকা রেন্ডার করা</button>
+                <button class="nav-link w-full text-left p-3 my-1 rounded-lg transition-colors duration-200" data-target="useref">৭. useRef হুক</button>
+                <button class="nav-link w-full text-left p-3 my-1 rounded-lg transition-colors duration-200" data-target="usecontext">৮. useContext হুক</button>
+                <button class="nav-link w-full text-left p-3 my-1 rounded-lg transition-colors duration-200" data-target="useeffect">৯. useEffect হুক</button>
+                <button class="nav-link w-full text-left p-3 my-1 rounded-lg transition-colors duration-200" data-target="form-handling">১০. ফর্ম হ্যান্ডলিং</button>
+                <button class="nav-link w-full text-left p-3 my-1 rounded-lg transition-colors duration-200" data-target="custom-hooks">১১. কাস্টম হুক</button>
+            </nav>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="flex-1 p-6 md:p-10">
+            <!-- Section 1: Getting Started -->
+            <section id="getting-started" class="content-section active">
+                <h1 class="text-4xl font-bold mb-4">১. শুরু করা: রিয়্যাক্ট কী এবং কেন</h1>
+                <p class="text-lg text-gray-600 leading-relaxed">
+                    রিয়্যাক্ট একটি জাভাস্ক্রিপ্ট লাইব্রেরি যা ইউজার ইন্টারফেস (UI) তৈরি করার জন্য ব্যবহৃত হয়। এটি মেটা দ্বারা পরিচালিত এবং পুনরায় ব্যবহারযোগ্য (reusable) কম্পোনেন্ট দিয়ে জটিল UI তৈরি করতে সাহায্য করে। এই সেকশনে আমরা দেখব কিভাবে একটি নতুন রিয়্যাক্ট প্রোজেক্ট শুরু করতে হয়।
+                </p>
+                <h3 class="text-2xl font-semibold mt-6 mb-2">নতুন প্রোজেক্ট তৈরি</h3>
+                <p class="text-gray-600">
+                    একটি নতুন প্রোজেক্ট তৈরি করার সবচেয়ে সহজ উপায় হলো `npx create-react-app` কমান্ড ব্যবহার করা।
+                </p>
+                <pre class="code-block mt-4"><code># আপনার টার্মিনালে এই কমান্ডটি চালান
+npx create-react-app my-first-app
+
+# প্রোজেক্ট ফোল্ডারে যান
+cd my-first-app
+
+# অ্যাপ্লিকেশনটি চালু করুন
+npm start</code></pre>
+            </section>
+
+            <!-- Section 2: File Structure -->
+            <section id="file-structure" class="content-section">
+                <h1 class="text-4xl font-bold mb-4">২. একটি রিয়্যাক্ট প্রোজেক্টের ফাইল স্ট্রাকচার</h1>
+                <p class="text-lg text-gray-600 leading-relaxed">
+                    `create-react-app` কমান্ড চালানোর পর আপনি একটি নির্দিষ্ট ফোল্ডার স্ট্রাকচার দেখতে পাবেন। এর মধ্যে সবচেয়ে গুরুত্বপূর্ণ কিছু ফাইল এবং ফোল্ডার হলো `src/` এবং `public/`।
+                </p>
+                <h3 class="text-2xl font-semibold mt-6 mb-2"><code>src</code> ফোল্ডারের ভেতর</h3>
+                <p class="text-gray-600">
+                    আমাদের বেশিরভাগ কাজ `src` ফোল্ডারের ভিতরেই হয়। এর মূল ফাইলগুলো হলো `index.js` এবং `App.js`।
+                </p>
+                <pre class="code-block mt-4"><code>// src/index.js (মূল রুট ফাইল)
+import React from 'react';
+import ReactDOM from 'react-dom/client';
+import App from './App';
+
+const root = ReactDOM.createRoot(document.getElementById('root'));
+root.render(&lt;App /&gt;);</code></pre>
+                <pre class="code-block mt-4"><code>// src/App.js (আপনার মূল কম্পোনেন্ট)
+import React from 'react';
+
+function App() {
+    return (
+        &lt;div&gt;
+            &lt;h1&gt;আমার প্রথম রিয়্যাক্ট অ্যাপ&lt;/h1&gt;
+        &lt;/div&gt;
+    );
+}
+
+export default App;</code></pre>
+            </section>
+
+            <!-- Section 3: Components & Props -->
+            <section id="components" class="content-section">
+                <h1 class="text-4xl font-bold mb-4">৩. কম্পোনেন্ট তৈরি এবং প্রপস (Props) ব্যবহার</h1>
+                <p class="text-lg text-gray-600 leading-relaxed">
+                    কম্পোনেন্ট হলো রিয়্যাক্টের মূল বিল্ডিং ব্লক। এটি HTML-এর মতো দেখতে JSX রিটার্ন করে। <strong>প্রপস</strong> ব্যবহার করে আমরা একটি কম্পোনেন্ট থেকে অন্য কম্পোনেন্টে ডেটা পাঠাতে পারি।
+                </p>
+                <div class="demo-box">
+                    <h3 class="text-xl font-semibold mb-4">ইন্টারেক্টিভ ডেমো: প্রপস</h3>
+                    <input type="text" id="props-input" class="border p-2 rounded w-full mb-4" value="রিয়্যাক্ট" placeholder="এখানে একটি নাম লিখুন">
+                    <div id="props-output" class="text-2xl font-bold p-4 bg-white rounded-lg border">হ্যালো, রিয়্যাক্ট!</div>
+                </div>
+                <h3 class="text-2xl font-semibold mt-6 mb-2">উদাহরণ কোড: <code>Greeting.js</code></h3>
+                <pre class="code-block"><code>const Greeting = ({ name }) => {
+    return &lt;h1&gt;হ্যালো, {name}!&lt;/h1&gt;;
+};
+
+// App.js এ ব্যবহার:
+&lt;Greeting name="রিয়্যাক্ট" /&gt;</code></pre>
+            </section>
+
+            <!-- Section 4: State & useState -->
+            <section id="state" class="content-section">
+                <h1 class="text-4xl font-bold mb-4">৪. স্টেট (State) এবং <code>useState</code> হুক</h1>
+                <p class="text-lg text-gray-600 leading-relaxed">
+                    স্টেট হল কম্পোনেন্টের নিজস্ব ডেটা যা সময়ের সাথে পরিবর্তন হতে পারে। <strong>`useState`</strong> হুক একটি অ্যারে রিটার্ন করে, যার প্রথম উপাদানটি বর্তমান স্টেট ভ্যালু এবং দ্বিতীয়টি হলো একটি ফাংশন যা ঐ স্টেট ভ্যালু পরিবর্তন করতে ব্যবহৃত হয়।
+                </p>
+                <div class="demo-box">
+                    <h3 class="text-xl font-semibold mb-4">ইন্টারেক্টিভ ডেমো: কাউন্টার</h3>
+                    <p class="text-2xl font-bold mb-4 text-center">গণনা: <span id="counter-output" class="text-purple-600">0</span></p>
+                    <div class="flex justify-center gap-4">
+                        <button id="increment-btn" class="bg-green-500 text-white font-bold py-2 px-6 rounded-lg hover:bg-green-600 transition-all">বৃদ্ধি করুন</button>
+                        <button id="decrement-btn" class="bg-red-500 text-white font-bold py-2 px-6 rounded-lg hover:bg-red-600 transition-all">হ্রাস করুন</button>
+                    </div>
+                </div>
+                <h3 class="text-2xl font-semibold mt-6 mb-2">উদাহরণ কোড: <code>Counter.js</code></h3>
+                <pre class="code-block"><code>const Counter = () => {
+    const [count, setCount] = useState(0);
+
+    return (
+        &lt;div&gt;
+            &lt;p&gt;গণনা: {count}&lt;/p&gt;
+            &lt;button onClick={() => setCount(count + 1)}&gt;বৃদ্ধি করুন&lt;/button&gt;
+        &lt;/div&gt;
+    );
+};</code></pre>
+            </section>
+            
+            <!-- Section 5: Conditional Rendering -->
+            <section id="conditional-rendering" class="content-section">
+                <h1 class="text-4xl font-bold mb-4">৫. শর্তসাপেক্ষে রেন্ডারিং (Conditional Rendering)</h1>
+                <p class="text-lg text-gray-600 leading-relaxed">
+                    একটি নির্দিষ্ট শর্তের উপর ভিত্তি করে কম্পোনেন্ট রেন্ডার করার জন্য জাভাস্ক্রিপ্টের `if/else` বা টার্নারি অপারেটর (`? :`) ব্যবহার করা হয়।
+                </p>
+                <div class="demo-box">
+                    <h3 class="text-xl font-semibold mb-4">ইন্টারেক্টিভ ডেমো: লগইন স্ট্যাটাস</h3>
+                    <button id="toggle-login" class="bg-blue-500 text-white font-bold py-2 px-6 rounded-lg hover:bg-blue-600 transition-all">লগইন টগল করুন</button>
+                    <div id="login-status" class="mt-4 p-4 rounded-lg bg-white border text-center text-lg font-medium">আপনি লগইন করেননি।</div>
+                </div>
+                <h3 class="text-2xl font-semibold mt-6 mb-2">উদাহরণ কোড</h3>
+                <pre class="code-block"><code>const App = () => {
+    const [isLoggedIn, setIsLoggedIn] = useState(false);
+
+    return (
+        &lt;div&gt;
+            {isLoggedIn ? (&lt;h1&gt;স্বাগতম!&lt;/h1&gt;) : (&lt;h1&gt;অনুগ্রহ করে লগইন করুন।&lt;/h1&gt;)}
+            &lt;button onClick={() => setIsLoggedIn(!isLoggedIn)}&gt;
+                {isLoggedIn ? 'লগআউট' : 'লগইন'}
+            &lt;/button&gt;
+        &lt;/div&gt;
+    );
+};</code></pre>
+            </section>
+
+            <!-- Section 6: List Rendering -->
+            <section id="list-rendering" class="content-section">
+                <h1 class="text-4xl font-bold mb-4">৬. তালিকা রেন্ডার করা (List Rendering)</h1>
+                <p class="text-lg text-gray-600 leading-relaxed">
+                    একটি ডেটা অ্যারে থেকে একাধিক উপাদান তৈরি করার জন্য `map()` ফাংশন ব্যবহার করা হয়। প্রতিটি উপাদানে একটি অনন্য `key` প্রপস ব্যবহার করা আবশ্যক।
+                </p>
+                <div class="demo-box">
+                    <h3 class="text-xl font-semibold mb-4">ইন্টারেক্টিভ ডেমো: আইটেমের তালিকা</h3>
+                    <ul id="item-list" class="list-disc list-inside text-lg text-gray-700"></ul>
+                </div>
+                <h3 class="text-2xl font-semibold mt-6 mb-2">উদাহরণ কোড</h3>
+                <pre class="code-block"><code>const fruits = ['আপেল', 'কলা', 'কমলা', 'পেঁপে'];
+
+const ItemList = () => {
+    return (
+        &lt;ul&gt;
+            {fruits.map((fruit, index) => (
+                &lt;li key={index}&gt;{fruit}&lt;/li&gt;
+            ))}
+        &lt;/ul&gt;
+    );
+};</code></pre>
+            </section>
+
+            <!-- Section 7: useRef Hook -->
+            <section id="useref" class="content-section">
+                <h1 class="text-4xl font-bold mb-4">৭. <code>useRef</code> হুক</h1>
+                <p class="text-lg text-gray-600 leading-relaxed">
+                    `useRef` হুক আপনাকে এমন একটি পরিবর্তনশীল (mutable) অবজেক্ট তৈরি করতে দেয়, যা কম্পোনেন্টের লাইফটাইম জুড়ে স্থায়ী থাকে এবং এর মান পরিবর্তন হলেও কম্পোনেন্টকে পুনরায় রেন্ডার করে না। এটি সাধারণত সরাসরি DOM উপাদান অ্যাক্সেস করার জন্য ব্যবহৃত হয়।
+                </p>
+                <div class="demo-box">
+                    <h3 class="text-xl font-semibold mb-4">ইন্টারেক্টিভ ডেমো: ইনপুট ফোকাস</h3>
+                    <p class="text-gray-600 mb-2">এই বাটনে ক্লিক করে নিচের ইনপুট ফিল্ডটিকে ফোকাস করুন।</p>
+                    <input type="text" id="focus-input" class="border p-2 rounded w-full" placeholder="এখানে কিছু লিখুন...">
+                    <button id="focus-btn" class="bg-indigo-500 text-white font-bold py-2 px-6 rounded-lg hover:bg-indigo-600 transition-all mt-4">ইনপুট ফোকাস করুন</button>
+                </div>
+                <h3 class="text-2xl font-semibold mt-6 mb-2">উদাহরণ কোড: <code>FocusInput.js</code></h3>
+                <pre class="code-block"><code>import React, { useRef } from 'react';
+
+const FocusInput = () => {
+    const inputRef = useRef(null);
+
+    const handleClick = () => {
+        inputRef.current.focus();
+    };
+
+    return (
+        &lt;div&gt;
+            &lt;input type="text" ref={inputRef} /&gt;
+            &lt;button onClick={handleClick}&gt;ফোকাস&lt;/button&gt;
+        &lt;/div&gt;
+    );
+};</code></pre>
+            </section>
+
+            <!-- Section 8: useContext Hook -->
+            <section id="usecontext" class="content-section">
+                <h1 class="text-4xl font-bold mb-4">৮. <code>useContext</code> হুক</h1>
+                <p class="text-lg text-gray-600 leading-relaxed">
+                    `useContext` হুক ব্যবহার করে আপনি একটি কম্পোনেন্ট ট্রি-এর মধ্যে ডেটা পাস করতে পারেন, প্রপসকে ম্যানুয়ালি প্রতিটি স্তরে পাস না করে। এটি "প্রপ ড্রিলিং" নামক সমস্যাটি সমাধান করে এবং গ্লোবাল স্টেট ম্যানেজমেন্টের জন্য ব্যবহৃত হয়।
+                </p>
+                <div class="demo-box">
+                    <h3 class="text-xl font-semibold mb-4">ইন্টারেক্টিভ ডেমো: থিম পরিবর্তন</h3>
+                    <p class="text-gray-600 mb-2">ডান পাশের থিম টগল আইকনে ক্লিক করে থিম পরিবর্তন করুন।</p>
+                </div>
+                <h3 class="text-2xl font-semibold mt-6 mb-2">উদাহরণ কোড</h3>
+                <p class="text-gray-600">
+                    এখানে একটি সরলীকৃত উদাহরণ দেওয়া হলো যেখানে একটি থিম কন্টেক্সট ব্যবহার করে অ্যাপ্লিকেশনের থিম পরিবর্তন করা হয়েছে।
+                </p>
+                <pre class="code-block mt-4"><code>// ThemeContext.js
+import { createContext } from 'react';
+export const ThemeContext = createContext(null);
+
+// App.js (Provider Component)
+import { ThemeContext } from './ThemeContext';
+// ... অন্যান্য কম্পোনেন্ট ইম্পোর্ট ...
+const App = () => {
+    const [theme, setTheme] = useState('light');
+    return (
+        &lt;ThemeContext.Provider value={{ theme, setTheme }}&gt;
+            &lt;div className={theme === 'dark' ? 'dark-mode' : ''}&gt;
+                {/* ... অন্যান্য কম্পোনেন্ট */}
+            &lt;/div&gt;
+        &lt;/ThemeContext.Provider&gt;
+    );
+};</code></pre>
+            </section>
+
+            <!-- Section 9: useEffect Hook -->
+            <section id="useeffect" class="content-section">
+                <h1 class="text-4xl font-bold mb-4">৯. <code>useEffect</code> হুক</h1>
+                <p class="text-lg text-gray-600 leading-relaxed">
+                    `useEffect` হুক রিয়্যাক্ট কম্পোনেন্টে সাইড ইফেক্ট (side effects) পরিচালনা করার জন্য ব্যবহৃত হয়। যেমন: ডেটা লোড করা, সাবস্ক্রিপশন সেট আপ করা, বা সরাসরি DOM ম্যানিপুলেশন করা। এটি কম্পোনেন্ট রেন্ডার হওয়ার পর বা স্টেট/প্রপস পরিবর্তনের পর কাজ করে।
+                </p>
+                <div class="demo-box">
+                    <h3 class="text-xl font-semibold mb-4">ইন্টারেক্টিভ ডেমো: ডেটা লোডিং</h3>
+                    <p class="text-gray-600 mb-2">এই বাটনে ক্লিক করে ডেটা লোড করার একটি প্রক্রিয়া শুরু করুন।</p>
+                    <button id="fetch-data-btn" class="bg-pink-500 text-white font-bold py-2 px-6 rounded-lg hover:bg-pink-600 transition-all">ডেটা লোড করুন</button>
+                    <div id="data-status" class="mt-4 p-4 rounded-lg bg-white border text-center text-lg font-medium">এখানে লোড করা ডেটা দেখাবে।</div>
+                </div>
+                <h3 class="text-2xl font-semibold mt-6 mb-2">উদাহরণ কোড: <code>DataFetcher.js</code></h3>
+                <pre class="code-block"><code>import React, { useState, useEffect } from 'react';
+
+const DataFetcher = () => {
+    const [data, setData] = useState(null);
+    const [loading, setLoading] = useState(false);
+
+    useEffect(() => {
+        if (loading) {
+            setTimeout(() => {
+                setData('এটি সার্ভার থেকে লোড করা ডেটা');
+                setLoading(false);
+            }, 2000); // 2 সেকেন্ড পর ডেটা লোড হবে
+        }
+    }, [loading]);
+
+    return (
+        &lt;div&gt;
+            &lt;button onClick={() => setLoading(true)}&gt;ডেটা লোড করুন&lt;/button&gt;
+            {loading ? (&lt;p&gt;লোডিং...&lt;/p&gt;) : (&lt;p&gt;{data}&lt;/p&gt;)}
+        &lt;/div&gt;
+    );
+};</code></pre>
+            </section>
+            
+            <!-- New Section 10: Form Handling -->
+            <section id="form-handling" class="content-section">
+                <h1 class="text-4xl font-bold mb-4">১০. ফর্ম হ্যান্ডলিং এবং কন্ট্রোলড কম্পোনেন্ট</h1>
+                <p class="text-lg text-gray-600 leading-relaxed">
+                    রিয়্যাক্টে ফর্মের ডেটা হ্যান্ডল করার জন্য <strong>কন্ট্রোলড কম্পোনেন্ট</strong> একটি স্ট্যান্ডার্ড পদ্ধতি। এতে, ফর্মের ইনপুট ভ্যালু রিয়্যাক্ট স্টেটের সাথে সিঙ্ক্রোনাইজ করা হয়। যখনই ইনপুটে কোনো পরিবর্তন হয়, স্টেট আপডেট করা হয়।
+                </p>
+                <div class="demo-box">
+                    <h3 class="text-xl font-semibold mb-4">ইন্টারেক্টিভ ডেমো: কন্ট্রোলড ফর্ম</h3>
+                    <form id="controlled-form">
+                        <div class="mb-4">
+                            <label for="name" class="block text-sm font-medium text-gray-400">নাম</label>
+                            <input type="text" id="form-name" placeholder="আপনার নাম লিখুন" class="w-full p-2 mt-1 rounded-lg">
+                        </div>
+                        <div class="mb-4">
+                            <label for="email" class="block text-sm font-medium text-gray-400">ইমেইল</label>
+                            <input type="email" id="form-email" placeholder="আপনার ইমেইল লিখুন" class="w-full p-2 mt-1 rounded-lg">
+                        </div>
+                        <button type="submit" class="w-full bg-orange-500 text-white font-bold py-2 px-6 rounded-lg hover:bg-orange-600 transition-all">সাবমিট করুন</button>
+                    </form>
+                    <div id="form-output" class="mt-4 p-4 rounded-lg bg-white border text-gray-900 font-medium hidden"></div>
+                </div>
+                <h3 class="text-2xl font-semibold mt-6 mb-2">উদাহরণ কোড: <code>ControlledForm.js</code></h3>
+                <pre class="code-block"><code>import React, { useState } from 'react';
+
+const ControlledForm = () => {
+    const [name, setName] = useState('');
+    const [email, setEmail] = useState('');
+
+    const handleSubmit = (event) => {
+        event.preventDefault();
+        alert(`নাম: ${name}, ইমেইল: ${email}`);
+    };
+
+    return (
+        &lt;form onSubmit={handleSubmit}&gt;
+            &lt;input 
+                type="text" 
+                value={name} 
+                onChange={(e) => setName(e.target.value)} 
+                placeholder="আপনার নাম"
+            /&gt;
+            &lt;input 
+                type="email" 
+                value={email} 
+                onChange={(e) => setEmail(e.target.value)} 
+                placeholder="আপনার ইমেইল"
+            /&gt;
+            &lt;button type="submit"&gt;সাবমিট&lt;/button&gt;
+        &lt;/form&gt;
+    );
+};</code></pre>
+            </section>
+            
+            <!-- New Section 11: Custom Hooks -->
+            <section id="custom-hooks" class="content-section">
+                <h1 class="text-4xl font-bold mb-4">১১. কাস্টম হুক তৈরি</h1>
+                <p class="text-lg text-gray-600 leading-relaxed">
+                    <strong>কাস্টম হুক</strong> হলো জাভাস্ক্রিপ্ট ফাংশন যা `use` দিয়ে শুরু হয় এবং যা অন্য হুককে কল করতে পারে। এটি কম্পোনেন্ট লজিককে পুনরায় ব্যবহারযোগ্য (reusable) করতে এবং কোডকে পরিষ্কার রাখতে সাহায্য করে।
+                </p>
+                <div class="demo-box">
+                    <h3 class="text-xl font-semibold mb-4">ইন্টারেক্টিভ ডেমো: টগল</h3>
+                    <button id="toggle-btn" class="bg-cyan-500 text-white font-bold py-2 px-6 rounded-lg hover:bg-cyan-600 transition-all">টগল করুন</button>
+                    <p id="toggle-text" class="mt-4 p-4 rounded-lg bg-white border text-gray-900 font-medium">এটি একটি টগলযোগ্য টেক্সট।</p>
+                </div>
+                <h3 class="text-2xl font-semibold mt-6 mb-2">উদাহরণ কোড: <code>useToggle.js</code> এবং ব্যবহার</h3>
+                <pre class="code-block"><code>// hooks/useToggle.js
+import { useState } from 'react';
+
+const useToggle = (initialValue = false) => {
+    const [value, setValue] = useState(initialValue);
+    const toggle = () => {
+        setValue(prevValue => !prevValue);
+    };
+    return [value, toggle];
+};
+
+export default useToggle;
+
+// MyComponent.js এ ব্যবহার:
+import useToggle from './hooks/useToggle';
+
+const MyComponent = () => {
+    const [isVisible, toggle] = useToggle(true);
+
+    return (
+        &lt;div&gt;
+            &lt;button onClick={toggle}&gt;টগল করুন&lt;/button&gt;
+            {isVisible && &lt;p&gt;এই টেক্সটটি টগল করা যাবে।&lt;/p&gt;}
+        &lt;/div&gt;
+    );
+};</code></pre>
+            </section>
+        </main>
+    </div>
+
+    <!-- Footer -->
+    <footer class="shadow-inner p-6 mt-10 text-center">
+        <p class="text-gray-600">সম্পূর্ণ রিয়্যাক্ট জেএস গাইড © ২০২৪</p>
+        <div class="flex flex-col items-center gap-4 mt-6">
+            <div class="text-sm text-gray-600">
+                এই গাইডটি <a href="https://github.com/raihan243026/react-cheatsheet-type-01" target="_blank" class="text-blue-500 hover:underline">Raihan243026</a>-এর GitHub প্রোজেক্ট থেকে অনুপ্রাণিত। আপনি তার লাইভ সার্ভারেও দেখতে পারেন: 
+                <a href="https://raihan243026.github.io/react-cheatsheet-type-01/" target="_blank" class="text-blue-500 hover:underline">লাইভ সার্ভার</a>
+            </div>
+        </div>
+        <div class="flex justify-center gap-6 mt-4">
+            <a href="#" class="text-2xl text-gray-600 hover:text-blue-500 transition-colors duration-200" aria-label="Facebook">
+                <i class="fab fa-facebook-f"></i>
+            </a>
+            <a href="#" class="text-2xl text-gray-600 hover:text-blue-400 transition-colors duration-200" aria-label="Twitter">
+                <i class="fab fa-twitter"></i>
+            </a>
+            <a href="#" class="text-2xl text-gray-600 hover:text-pink-600 transition-colors duration-200" aria-label="Instagram">
+                <i class="fab fa-instagram"></i>
+            </a>
+            <a href="#" class="text-2xl text-gray-600 hover:text-gray-800 transition-colors duration-200" aria-label="GitHub">
+                <i class="fab fa-github"></i>
+            </a>
+        </div>
+    </footer>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const navLinks = document.querySelectorAll('.nav-link');
+            const contentSections = document.querySelectorAll('.content-section');
+            const searchBar = document.getElementById('search-bar');
+            const themeToggleDesktop = document.getElementById('theme-toggle-desktop');
+            const themeToggleMobile = document.getElementById('theme-toggle-mobile');
+            const menuToggle = document.getElementById('menu-toggle');
+            const sidebar = document.getElementById('sidebar');
+            const themeIconDesktop = themeToggleDesktop.querySelector('.theme-toggle-icon');
+            const themeIconMobile = themeToggleMobile.querySelector('.theme-toggle-icon');
+
+            // --- Navigation & Search Logic ---
+            const switchContent = (targetId) => {
+                navLinks.forEach(nav => nav.classList.remove('active'));
+                const newActiveLink = document.querySelector(`[data-target="${targetId}"]`);
+                if (newActiveLink) {
+                    newActiveLink.classList.add('active');
+                }
+                contentSections.forEach(section => {
+                    if (section.id === targetId) {
+                        section.classList.add('active');
+                        section.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                    } else {
+                        section.classList.remove('active');
+                    }
+                });
+            };
+
+            const filterContent = (query) => {
+                const lowerCaseQuery = query.toLowerCase();
+                let firstMatchFound = false;
+                navLinks.forEach(link => {
+                    const text = link.textContent.toLowerCase();
+                    const targetId = link.getAttribute('data-target');
+                    if (text.includes(lowerCaseQuery)) {
+                        if (!firstMatchFound) {
+                            switchContent(targetId);
+                            firstMatchFound = true;
+                        }
+                        link.style.display = 'block';
+                    } else {
+                        link.style.display = 'none';
+                    }
+                });
+                if (query === '' && !firstMatchFound) {
+                    switchContent('getting-started');
+                    navLinks.forEach(link => link.style.display = 'block');
+                }
+            };
+
+            navLinks.forEach(link => {
+                link.addEventListener('click', () => {
+                    const targetId = link.getAttribute('data-target');
+                    switchContent(targetId);
+                    if (window.innerWidth < 768) {
+                        sidebar.classList.add('hidden');
+                    }
+                });
+            });
+
+            searchBar.addEventListener('input', (e) => {
+                filterContent(e.target.value);
+            });
+
+            menuToggle.addEventListener('click', () => {
+                sidebar.classList.toggle('hidden');
+            });
+
+            // --- Theme Toggle Logic ---
+            const toggleTheme = () => {
+                const isBlackTheme = document.body.classList.contains('black-theme');
+                if (isBlackTheme) {
+                    document.body.classList.remove('black-theme');
+                    document.body.classList.add('dark-red-theme');
+                    themeIconDesktop.classList.remove('black');
+                    themeIconDesktop.classList.add('dark-red');
+                    themeIconMobile.classList.remove('black');
+                    themeIconMobile.classList.add('dark-red');
+                } else {
+                    document.body.classList.remove('dark-red-theme');
+                    document.body.classList.add('black-theme');
+                    themeIconDesktop.classList.remove('dark-red');
+                    themeIconDesktop.classList.add('black');
+                    themeIconMobile.classList.remove('dark-red');
+                    themeIconMobile.classList.add('black');
+                }
+            };
+
+            themeToggleDesktop.addEventListener('click', toggleTheme);
+            themeToggleMobile.addEventListener('click', toggleTheme);
+            
+            // --- Interactive Demos Logic ---
+
+            // Section 3: Props Demo
+            const propsInput = document.getElementById('props-input');
+            const propsOutput = document.getElementById('props-output');
+            propsInput.addEventListener('input', (e) => {
+                const name = e.target.value || 'কিছু';
+                propsOutput.textContent = `হ্যালো, ${name}!`;
+            });
+
+            // Section 4: State Demo
+            let counter = 0;
+            const counterOutput = document.getElementById('counter-output');
+            document.getElementById('increment-btn').addEventListener('click', () => {
+                counter++;
+                counterOutput.textContent = counter;
+            });
+            document.getElementById('decrement-btn').addEventListener('click', () => {
+                counter--;
+                counterOutput.textContent = counter;
+            });
+
+            // Section 5: Conditional Rendering Demo
+            let isLoggedIn = false;
+            const loginStatus = document.getElementById('login-status');
+            const toggleLoginBtn = document.getElementById('toggle-login');
+            toggleLoginBtn.addEventListener('click', () => {
+                isLoggedIn = !isLoggedIn;
+                if (isLoggedIn) {
+                    loginStatus.textContent = 'আপনি এখন লগইন করেছেন।';
+                    toggleLoginBtn.textContent = 'লগআউট টগল করুন';
+                } else {
+                    loginStatus.textContent = 'আপনি লগইন করেননি।';
+                    toggleLoginBtn.textContent = 'লগইন টগল করুন';
+                }
+            });
+
+            // Section 6: List Rendering Demo
+            const fruits = ['আপেল', 'কলা', 'কমলা', 'পেঁপে'];
+            const itemList = document.getElementById('item-list');
+            if (itemList) {
+                fruits.forEach(fruit => {
+                    const li = document.createElement('li');
+                    li.textContent = fruit;
+                    itemList.appendChild(li);
+                });
+            }
+
+            // Section 7: useRef Demo
+            const focusInput = document.getElementById('focus-input');
+            const focusBtn = document.getElementById('focus-btn');
+            if(focusBtn && focusInput) {
+                focusBtn.addEventListener('click', () => {
+                    focusInput.focus();
+                });
+            }
+
+            // Section 9: useEffect Demo
+            const fetchDataBtn = document.getElementById('fetch-data-btn');
+            const dataStatus = document.getElementById('data-status');
+            if (fetchDataBtn && dataStatus) {
+                fetchDataBtn.addEventListener('click', () => {
+                    dataStatus.textContent = 'লোডিং...';
+                    setTimeout(() => {
+                        dataStatus.textContent = 'এটি সার্ভার থেকে লোড করা ডেটা';
+                    }, 2000);
+                });
+            }
+
+            // New Section 10: Form Handling Demo
+            const controlledForm = document.getElementById('controlled-form');
+            const formNameInput = document.getElementById('form-name');
+            const formEmailInput = document.getElementById('form-email');
+            const formOutput = document.getElementById('form-output');
+            
+            if (controlledForm) {
+                controlledForm.addEventListener('submit', (e) => {
+                    e.preventDefault();
+                    const name = formNameInput.value;
+                    const email = formEmailInput.value;
+                    formOutput.innerHTML = `<strong>সাবমিট করা হয়েছে:</strong><br>নাম: ${name}<br>ইমেইল: ${email}`;
+                    formOutput.classList.remove('hidden');
+                });
+            }
+
+            // New Section 11: Custom Hooks Demo
+            const toggleBtn = document.getElementById('toggle-btn');
+            const toggleText = document.getElementById('toggle-text');
+            let isVisible = true;
+            
+            if (toggleBtn && toggleText) {
+                toggleBtn.addEventListener('click', () => {
+                    isVisible = !isVisible;
+                    if (isVisible) {
+                        toggleText.style.display = 'block';
+                    } else {
+                        toggleText.style.display = 'none';
+                    }
+                });
+            }
+
+        });
+    </script>
+</body>
+</html>
